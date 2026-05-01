@@ -1225,8 +1225,9 @@ section.compact{padding:80px 0}
     try {
       await fetch('https://n8n.webdo24.cz/webhook/5fdddafe-8f87-45d8-b234-fc1e008ef73e', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
+        mode: 'no-cors',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams(data)
       });
       note.textContent = 'Děkujeme. Vaše zpráva byla odeslána.';
       note.classList.add('ok');
