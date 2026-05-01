@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pavel Douša | Elektrikář Chabařovice — Rozvaděče · Instalace · Revize</title>
+<meta name="description" content="Pavel Douša — profesionální elektrikář z Chabařovic. Rozvaděče, kompletní elektroinstalace, rekonstrukce, LED a chytré prvky. Klid v pojistkách. Kvalita bez kompromisů.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c14;
+  --bg-2:#0a0d12;
+  --bg-3:#11151f;
+  --line:rgba(255,255,255,.07);
+  --line-strong:rgba(255,255,255,.14);
+  --ink:#f6f7fb;
+  --ink-dim:#9aa3b2;
+  --ink-mute:#5a6373;
+  --yellow:#FFD600;
+  --yellow-warm:#FFB400;
+  --blue:#00D4FF;
+  --blue-deep:#0096ff;
+  --red:#FF3B30;
+  --green:#00ff9d;
+  --shadow:0 24px 80px rgba(0,0,0,.45);
+}
+html{scroll-behavior:smooth}
+html,body{background:var(--bg)}
+body{
+  font-family:'DM Sans',Inter,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--ink);
+  line-height:1.6;
+  overflow-x:hidden;
+  font-feature-settings:'ss01','cv11';
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255,214,0,.08), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(0,212,255,.08), transparent 45%),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size:auto, auto, 56px 56px, 56px 56px;
+  pointer-events:none;
+  z-index:0;
+}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font:inherit;color:inherit}
+
+.wrap{width:min(1240px, calc(100% - 40px));margin:0 auto;position:relative;z-index:2}
+
+/* CURSOR GLOW */
+.cursor-glow{
+  position:fixed;
+  top:0;left:0;
+  width:520px;height:520px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,214,0,.10), rgba(0,212,255,.05) 35%, transparent 65%);
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  z-index:1;
+  mix-blend-mode:screen;
+  transition:opacity .4s;
+  will-change:transform;
+}
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(8,12,20,.55);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.brand{display:inline-flex;align-items:center;gap:14px;font-weight:900;letter-spacing:.02em}
+.brand-mark{
+  width:50px;height:50px;border-radius:12px;
+  background:linear-gradient(135deg, var(--yellow) 0%, var(--yellow-warm) 100%);
+  display:grid;place-items:center;
+  position:relative;
+  box-shadow:
+    0 0 0 1px rgba(255,214,0,.3),
+    0 8px 32px rgba(255,214,0,.45),
+    inset 0 -6px 0 rgba(0,0,0,.18);
+  animation:pulseMark 3s ease-in-out infinite;
+}
+@keyframes pulseMark{
+  0%,100%{box-shadow:0 0 0 1px rgba(255,214,0,.3),0 8px 32px rgba(255,214,0,.45),inset 0 -6px 0 rgba(0,0,0,.18)}
+  50%{box-shadow:0 0 0 1px rgba(255,214,0,.5),0 12px 44px rgba(255,214,0,.7),inset 0 -6px 0 rgba(0,0,0,.18)}
+}
+.brand-mark svg{width:26px;color:#0b0d12}
+.brand-name{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:.06em;color:var(--ink);line-height:1}
+.brand small{display:block;color:var(--blue);font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;margin-top:4px}
+.nav-links{display:flex;align-items:center;gap:30px;color:var(--ink-dim);font-size:.88rem;font-weight:500}
+.nav-links a{position:relative;transition:color .2s}
+.nav-links a::after{
+  content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;
+  background:linear-gradient(90deg,var(--yellow),var(--blue));
+  transform:scaleX(0);transform-origin:left;transition:transform .3s ease;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{transform:scaleX(1)}
+@media (max-width:780px){.nav-links a:not(.btn){display:none}}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:48px;padding:0 24px;border-radius:8px;
+  font-weight:700;font-size:.92rem;letter-spacing:.02em;
+  transition:all .3s ease;
+  white-space:nowrap;
+  position:relative;
+  overflow:hidden;
+}
+.btn-primary{
+  background:var(--yellow);color:#0a0d12;
+  box-shadow:0 0 0 1px rgba(255,214,0,.4),0 8px 28px rgba(255,214,0,.35);
+}
+.btn-primary:hover{
+  background:#fff;color:#0a0d12;
+  box-shadow:0 0 0 1px rgba(255,214,0,.6),0 0 36px rgba(255,214,0,.7),0 0 80px rgba(255,214,0,.4);
+  transform:translateY(-2px);
+}
+.btn-ghost{
+  background:rgba(255,255,255,.04);color:var(--ink);
+  border:1px solid var(--line-strong);
+}
+.btn-ghost:hover{background:rgba(0,212,255,.08);border-color:var(--blue);color:var(--blue);box-shadow:0 0 24px rgba(0,212,255,.25)}
+.btn-blue{
+  background:var(--blue);color:#001018;
+  box-shadow:0 0 0 1px rgba(0,212,255,.4),0 8px 28px rgba(0,212,255,.4);
+}
+.btn-blue:hover{background:#fff;box-shadow:0 0 36px rgba(0,212,255,.7),0 0 80px rgba(0,212,255,.4);transform:translateY(-2px)}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:80px 0 100px;
+  overflow:hidden;
+}
+#particles{
+  position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(90deg, rgba(0,212,255,.045) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(0,212,255,.045) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at center, black 30%, transparent 75%);
+  z-index:1;pointer-events:none;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1.15fr 1fr;gap:64px;align-items:center;
+  position:relative;z-index:3;
+}
+@media (max-width:980px){.hero-inner{grid-template-columns:1fr;gap:48px}}
+
+.kicker{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.22em;
+  color:var(--blue);
+  padding:8px 14px;
+  border:1px solid rgba(0,212,255,.3);
+  border-radius:999px;
+  background:rgba(0,212,255,.05);
+  margin-bottom:28px;
+}
+.kicker .dot{
+  width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 12px var(--green);
+  animation:blink 1.6s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.4rem, 8.5vw, 7.5rem);
+  line-height:.92;
+  letter-spacing:.005em;
+  color:var(--ink);
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.hero h1 .neon{
+  display:block;
+  color:#fff;
+  text-shadow:
+    0 0 8px rgba(255,214,0,.85),
+    0 0 22px rgba(255,214,0,.55),
+    0 0 50px rgba(255,214,0,.35);
+  animation:neonFlick 4.5s infinite;
+}
+@keyframes neonFlick{
+  0%,18%,22%,25%,53%,57%,100%{
+    text-shadow:0 0 8px rgba(255,214,0,.85),0 0 22px rgba(255,214,0,.55),0 0 50px rgba(255,214,0,.35),0 0 90px rgba(255,214,0,.2);
+    color:#fff;
+  }
+  20%,24%,55%{
+    text-shadow:none;
+    color:#9a8c30;
+  }
+}
+.hero h1 .accent{
+  display:block;
+  background:linear-gradient(90deg, #fff 0%, var(--blue) 50%, var(--yellow) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero h1 .strike{
+  position:relative;display:inline-block;color:var(--ink);
+}
+.hero h1 .strike::after{
+  content:"";position:absolute;left:-4%;right:-4%;top:50%;height:.55em;
+  background:var(--red);
+  transform:translateY(-50%) skewX(-12deg);
+  z-index:-1;
+  box-shadow:0 0 30px rgba(255,59,48,.7);
+}
+
+.hero-sub{
+  font-size:1.1rem;color:var(--ink-dim);max-width:540px;margin:24px 0 36px;
+  line-height:1.65;
+}
+.hero-sub strong{color:var(--ink);font-weight:700}
+
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+
+.hero-meta{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  padding-top:28px;border-top:1px solid var(--line);
+  max-width:540px;
+}
+.hero-meta-item{font-family:'JetBrains Mono',monospace}
+.hero-meta-num{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--yellow);line-height:1;letter-spacing:.02em;text-shadow:0 0 16px rgba(255,214,0,.45)}
+.hero-meta-num.b{color:var(--blue);text-shadow:0 0 16px rgba(0,212,255,.5)}
+.hero-meta-num.r{color:var(--red);text-shadow:0 0 16px rgba(255,59,48,.45)}
+.hero-meta-lbl{font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--ink-mute);margin-top:6px}
+
+/* HERO VISUAL — LIGHTNING */
+.hero-visual{
+  position:relative;
+  aspect-ratio:1/1;
+  max-width:520px;
+  margin-left:auto;
+  width:100%;
+}
+.hero-visual::before{
+  content:"";position:absolute;inset:-10%;
+  background:radial-gradient(circle, rgba(255,214,0,.18) 0%, transparent 60%);
+  filter:blur(40px);
+  animation:glowPulse 3s ease-in-out infinite;
+}
+@keyframes glowPulse{
+  0%,100%{opacity:.6;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.06)}
+}
+.hero-svg{position:relative;width:100%;height:100%;z-index:2}
+.bolt-main{
+  fill:url(#boltGrad);
+  filter:drop-shadow(0 0 22px rgba(255,214,0,.85)) drop-shadow(0 0 60px rgba(255,214,0,.5));
+  animation:boltFlicker 2.4s ease-in-out infinite;
+}
+@keyframes boltFlicker{
+  0%,100%{filter:drop-shadow(0 0 22px rgba(255,214,0,.85)) drop-shadow(0 0 60px rgba(255,214,0,.5))}
+  45%{filter:drop-shadow(0 0 14px rgba(255,214,0,.5)) drop-shadow(0 0 30px rgba(255,214,0,.3))}
+  50%{filter:drop-shadow(0 0 36px rgba(0,212,255,.9)) drop-shadow(0 0 80px rgba(0,212,255,.6))}
+  55%{filter:drop-shadow(0 0 14px rgba(255,214,0,.5))}
+}
+.spark{
+  fill:var(--blue);
+  filter:drop-shadow(0 0 10px var(--blue));
+  animation:sparkFloat 4s ease-in-out infinite;
+}
+.ring-orbit{
+  fill:none;
+  stroke:rgba(0,212,255,.4);
+  stroke-width:1;
+  stroke-dasharray:4 6;
+  animation:rotate 30s linear infinite;
+  transform-origin:center;
+}
+.ring-orbit.r2{stroke:rgba(255,214,0,.3);animation-direction:reverse;animation-duration:45s}
+@keyframes rotate{to{transform:rotate(360deg)}}
+@keyframes sparkFloat{
+  0%,100%{transform:translateY(0);opacity:.7}
+  50%{transform:translateY(-12px);opacity:1}
+}
+
+.scroll-cue{
+  position:absolute;left:50%;bottom:24px;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--ink-mute);font-family:'JetBrains Mono',monospace;font-size:.66rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  z-index:3;
+}
+.scroll-cue::after{
+  content:"";width:1px;height:36px;
+  background:linear-gradient(180deg,var(--blue),transparent);
+  animation:scrollLine 1.8s ease-in-out infinite;
+}
+@keyframes scrollLine{
+  0%{transform:scaleY(0);transform-origin:top}
+  50%{transform:scaleY(1);transform-origin:top}
+  51%{transform-origin:bottom}
+  100%{transform:scaleY(0);transform-origin:bottom}
+}
+
+/* TICKER */
+.ticker{
+  background:linear-gradient(90deg, var(--yellow) 0%, var(--yellow-warm) 100%);
+  color:#0a0d12;
+  border-top:2px solid #000;
+  border-bottom:2px solid #000;
+  overflow:hidden;
+  position:relative;
+  z-index:5;
+}
+.ticker::before,.ticker::after{
+  content:"";position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
+}
+.ticker::before{left:0;background:linear-gradient(90deg, var(--yellow), transparent)}
+.ticker::after{right:0;background:linear-gradient(-90deg, var(--yellow), transparent)}
+.ticker-track{
+  display:flex;gap:0;
+  animation:tick 38s linear infinite;
+  white-space:nowrap;
+  padding:18px 0;
+}
+.ticker-track span{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.55rem;letter-spacing:.06em;
+  display:inline-flex;align-items:center;gap:24px;padding:0 24px;
+}
+.ticker-track svg{flex-shrink:0;color:#0a0d12}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTION HEAD */
+section{position:relative;padding:120px 0;z-index:2}
+section.compact{padding:80px 0}
+.section-head{max-width:780px;margin:0 auto 80px;text-align:center}
+.section-head .kicker{margin-bottom:20px}
+.section-head h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem, 5.5vw, 4.4rem);
+  line-height:1;letter-spacing:.02em;
+  text-transform:uppercase;
+  color:var(--ink);
+  margin-bottom:18px;
+}
+.section-head h2 em{
+  font-style:normal;
+  background:linear-gradient(90deg, var(--yellow), var(--blue));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.section-head p{color:var(--ink-dim);font-size:1.05rem;max-width:600px;margin:0 auto;line-height:1.65}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease, transform .9s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.delay-1{transition-delay:.1s}
+.reveal.delay-2{transition-delay:.2s}
+.reveal.delay-3{transition-delay:.3s}
+.reveal.delay-4{transition-delay:.4s}
+
+/* ROZVADĚČE SECTION */
+.rozvadec-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+@media (max-width:900px){.rozvadec-grid{grid-template-columns:1fr;gap:48px}}
+
+.rozvadec-text h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,4.5vw,3.2rem);
+  line-height:1;letter-spacing:.02em;
+  text-transform:uppercase;margin-bottom:22px;
+}
+.rozvadec-text h3 b{color:var(--yellow);font-weight:inherit;text-shadow:0 0 18px rgba(255,214,0,.5)}
+.rozvadec-text p{color:var(--ink-dim);margin-bottom:18px;line-height:1.7;font-size:1.02rem}
+.rozvadec-text ul{list-style:none;margin-top:24px;display:grid;gap:14px}
+.rozvadec-text li{
+  display:flex;align-items:flex-start;gap:14px;
+  color:var(--ink);font-weight:500;
+}
+.rozvadec-text li svg{flex-shrink:0;width:20px;height:20px;color:var(--blue);margin-top:3px;filter:drop-shadow(0 0 6px var(--blue))}
+
+.rozvadec-visual{
+  position:relative;aspect-ratio:4/5;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(0,212,255,.12), transparent 60%),
+    linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+  border:1px solid var(--line-strong);
+  border-radius:18px;
+  padding:32px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.rozvadec-visual::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg, rgba(0,212,255,.04) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(0,212,255,.04) 1px, transparent 1px);
+  background-size:32px 32px;
+  pointer-events:none;
+}
+.rozvadec-visual::after{
+  content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:linear-gradient(45deg, transparent 30%, rgba(255,214,0,.08) 50%, transparent 70%);
+  animation:scan 5s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes scan{
+  0%,100%{transform:translate(-30%,-30%)}
+  50%{transform:translate(30%,30%)}
+}
+.rozvadec-svg{width:100%;height:100%;position:relative;z-index:2}
+.tag{
+  position:absolute;
+  font-family:'JetBrains Mono',monospace;font-size:.66rem;
+  text-transform:uppercase;letter-spacing:.16em;
+  padding:6px 10px;
+  background:rgba(0,212,255,.12);
+  border:1px solid rgba(0,212,255,.4);
+  border-radius:6px;
+  color:var(--blue);
+  z-index:3;
+  white-space:nowrap;
+}
+.tag.t1{top:14%;right:10%}
+.tag.t2{top:48%;left:6%;background:rgba(255,214,0,.12);border-color:rgba(255,214,0,.45);color:var(--yellow)}
+.tag.t3{bottom:18%;right:8%;background:rgba(0,255,157,.1);border-color:rgba(0,255,157,.4);color:var(--green)}
+
+/* SERVICES */
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+}
+@media (max-width:980px){.services-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.services-grid{grid-template-columns:1fr}}
+
+.service{
+  position:relative;
+  padding:36px 30px;
+  background:linear-gradient(180deg, rgba(255,255,255,.025) 0%, rgba(255,255,255,.005) 100%);
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+  transition:transform .4s cubic-bezier(.2,.8,.2,1), border-color .4s, box-shadow .4s;
+  cursor:pointer;
+}
+.service::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(255,214,0,.08), transparent 40%);
+  opacity:0;transition:opacity .4s;
+  pointer-events:none;
+}
+.service:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,214,0,.5);
+  box-shadow:0 18px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,214,0,.3), 0 0 40px rgba(255,214,0,.18);
+}
+.service:hover::before{opacity:1}
+.service.s2:hover{border-color:rgba(0,212,255,.5);box-shadow:0 18px 60px rgba(0,0,0,.55),0 0 0 1px rgba(0,212,255,.3),0 0 40px rgba(0,212,255,.2)}
+.service.s2::before{background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(0,212,255,.1), transparent 40%)}
+.service.s3:hover{border-color:rgba(255,59,48,.4);box-shadow:0 18px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,59,48,.25),0 0 40px rgba(255,59,48,.18)}
+.service.s3::before{background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(255,59,48,.08), transparent 40%)}
+.service-icon{
+  width:56px;height:56px;border-radius:12px;
+  display:grid;place-items:center;
+  margin-bottom:24px;
+  background:rgba(255,214,0,.1);
+  border:1px solid rgba(255,214,0,.35);
+  color:var(--yellow);
+  position:relative;
+  box-shadow:0 0 24px rgba(255,214,0,.2);
+}
+.service.s2 .service-icon{background:rgba(0,212,255,.1);border-color:rgba(0,212,255,.4);color:var(--blue);box-shadow:0 0 24px rgba(0,212,255,.25)}
+.service.s3 .service-icon{background:rgba(255,59,48,.1);border-color:rgba(255,59,48,.35);color:var(--red);box-shadow:0 0 24px rgba(255,59,48,.2)}
+.service-icon svg{width:28px;height:28px}
+.service h3{
+  font-family:'Bebas Neue',sans-serif;font-size:1.65rem;letter-spacing:.04em;
+  text-transform:uppercase;margin-bottom:12px;color:var(--ink);
+}
+.service p{color:var(--ink-dim);font-size:.96rem;line-height:1.65}
+.service-num{
+  position:absolute;top:24px;right:26px;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink-mute);
+  letter-spacing:.18em;
+}
+
+/* STATS */
+.stats{
+  background:linear-gradient(180deg, transparent, rgba(0,212,255,.025), transparent);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+@media (max-width:780px){.stats-grid{grid-template-columns:1fr 1fr;gap:48px}}
+.stat{text-align:center;position:relative}
+.stat::after{
+  content:"";position:absolute;right:-16px;top:20%;height:60%;width:1px;
+  background:linear-gradient(180deg,transparent,var(--line-strong),transparent);
+}
+.stat:last-child::after{display:none}
+@media (max-width:780px){.stat::after{display:none}}
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.4rem,7vw,5.4rem);
+  line-height:1;letter-spacing:.02em;
+  background:linear-gradient(180deg, var(--ink) 0%, var(--yellow) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 30px rgba(255,214,0,.25));
+}
+.stat:nth-child(2) .stat-num{background:linear-gradient(180deg, var(--ink), var(--blue));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 30px rgba(0,212,255,.3))}
+.stat:nth-child(4) .stat-num{background:linear-gradient(180deg, var(--ink), var(--blue));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 30px rgba(0,212,255,.3))}
+.stat-suffix{display:inline}
+.stat-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;
+  color:var(--ink-mute);margin-top:10px;
+}
+
+/* TIMELINE */
+.timeline{
+  position:relative;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  padding-top:40px;
+}
+@media (max-width:900px){.timeline{grid-template-columns:1fr;gap:24px}}
+.timeline::before{
+  content:"";position:absolute;top:60px;left:8%;right:8%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--yellow) 20%,var(--blue) 80%,transparent);
+  z-index:1;
+}
+@media (max-width:900px){.timeline::before{display:none}}
+.tl-step{
+  position:relative;text-align:center;padding:0 12px;z-index:2;
+}
+.tl-node{
+  width:64px;height:64px;border-radius:50%;
+  margin:30px auto 24px;
+  background:var(--bg-3);
+  border:2px solid var(--yellow);
+  display:grid;place-items:center;
+  font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--yellow);
+  position:relative;
+  box-shadow:0 0 0 8px var(--bg), 0 0 24px rgba(255,214,0,.45);
+  transition:all .4s;
+}
+.tl-step:nth-child(2) .tl-node{border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 8px var(--bg),0 0 24px rgba(0,212,255,.5)}
+.tl-step:nth-child(3) .tl-node{border-color:var(--yellow);color:var(--yellow);box-shadow:0 0 0 8px var(--bg),0 0 24px rgba(255,214,0,.45)}
+.tl-step:nth-child(4) .tl-node{border-color:var(--green);color:var(--green);box-shadow:0 0 0 8px var(--bg),0 0 24px rgba(0,255,157,.5)}
+.tl-step:hover .tl-node{transform:scale(1.1)}
+.tl-step h4{
+  font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.04em;
+  text-transform:uppercase;margin-bottom:10px;color:var(--ink);
+}
+.tl-step p{color:var(--ink-dim);font-size:.92rem;line-height:1.6;max-width:240px;margin:0 auto}
+
+/* CTA / CONTACT */
+.cta{
+  position:relative;
+  padding:120px 0 140px;
+  overflow:hidden;
+}
+.cta::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(255,214,0,.12), transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(0,212,255,.12), transparent 50%);
+  z-index:1;
+}
+.cta-grid{
+  display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:start;
+  position:relative;z-index:2;
+}
+@media (max-width:900px){.cta-grid{grid-template-columns:1fr;gap:40px}}
+.cta-text h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,5vw,4rem);line-height:.95;letter-spacing:.02em;
+  text-transform:uppercase;margin-bottom:24px;
+}
+.cta-text h2 b{color:var(--yellow);font-weight:inherit;text-shadow:0 0 24px rgba(255,214,0,.55)}
+.cta-text p{color:var(--ink-dim);font-size:1.05rem;line-height:1.7;margin-bottom:30px;max-width:480px}
+
+.cta-bullets{list-style:none;display:grid;gap:14px;margin-top:30px}
+.cta-bullets li{display:flex;align-items:flex-start;gap:14px;color:var(--ink);font-weight:500}
+.cta-bullets li svg{flex-shrink:0;width:22px;height:22px;color:var(--green);filter:drop-shadow(0 0 6px var(--green));margin-top:2px}
+
+.contact-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.01) 100%);
+  border:1px solid var(--line-strong);
+  border-radius:18px;padding:36px;
+  box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.contact-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, transparent, var(--yellow) 30%, var(--blue) 70%, transparent);
+  animation:slideHL 3s ease-in-out infinite;
+}
+@keyframes slideHL{
+  0%,100%{opacity:.4;transform:scaleX(.8)}
+  50%{opacity:1;transform:scaleX(1)}
+}
+.contact-card h3{
+  font-family:'Bebas Neue',sans-serif;font-size:1.85rem;letter-spacing:.04em;
+  text-transform:uppercase;margin-bottom:8px;color:var(--ink);
+}
+.contact-card > p{color:var(--ink-dim);font-size:.92rem;margin-bottom:24px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.form-grid label.wide{grid-column:1/-1}
+.form-grid label{display:flex;flex-direction:column;gap:6px;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--ink-mute);font-family:'JetBrains Mono',monospace}
+.form-grid input,.form-grid select,.form-grid textarea{
+  background:rgba(0,0,0,.35);
+  border:1px solid var(--line-strong);
+  border-radius:8px;padding:14px 14px;
+  color:var(--ink);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;
+  text-transform:none;letter-spacing:0;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+.form-grid textarea{resize:vertical;min-height:110px}
+.form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{
+  outline:none;border-color:var(--yellow);
+  background:rgba(0,0,0,.55);
+  box-shadow:0 0 0 3px rgba(255,214,0,.15), 0 0 24px rgba(255,214,0,.18);
+}
+.form-grid select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23FFD600' d='M6 8L0 0h12z'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+.btn-submit{
+  width:100%;
+  background:linear-gradient(90deg, var(--yellow), var(--yellow-warm));
+  color:#0a0d12;font-weight:800;
+  min-height:54px;font-size:1rem;
+  text-transform:uppercase;letter-spacing:.08em;
+  box-shadow:0 0 0 1px rgba(255,214,0,.3),0 12px 32px rgba(255,214,0,.35);
+  transition:all .3s ease;
+  border-radius:10px;
+}
+.btn-submit:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 0 1px rgba(255,214,0,.5),0 0 36px rgba(255,214,0,.6),0 0 80px rgba(255,214,0,.35);
+  background:#fff;
+}
+.form-note{
+  margin-top:14px;font-size:.78rem;color:var(--ink-mute);
+  font-family:'JetBrains Mono',monospace;letter-spacing:.04em;
+}
+.form-note.ok{color:var(--green);text-shadow:0 0 8px rgba(0,255,157,.5)}
+
+/* FOOTER */
+.footer{
+  border-top:1px solid var(--line);
+  padding:40px 0 90px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;
+  color:var(--ink-mute);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.footer .y{color:var(--yellow)}
+.footer .b{color:var(--blue)}
+
+@media (max-width:680px){
+  section{padding:90px 0}
+  .hero{padding:48px 0 72px}
+  .hero-meta{grid-template-columns:1fr 1fr}
+  .ticker-track span{font-size:1.2rem}
+  .footer{padding:32px 0 100px}
+}
+
+/* webdo24 badge */
+#wd24-bar{position:fixed;bottom:0;left:0;right:0;z-index:99999;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(15,23,42,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.08);padding:10px 20px;font-family:-apple-system,'Inter',sans-serif;font-size:11px;font-weight:500;color:rgba(255,255,255,.5);box-shadow:0 -4px 16px rgba(0,0,0,.2)}
+#wd24-bar a{color:rgba(255,255,255,.85);text-decoration:none;font-weight:800;letter-spacing:-.02em;font-size:13px}
+#wd24-bar a span{color:#f97316}
+#wd24-bar a:hover{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">Pavel Douša</div>
+        <small>// Elektrikář / Chabařovice</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="#sluzby">Služby</a>
+      <a href="#rozvadece">Rozvaděče</a>
+      <a href="#postup">Postup</a>
+      <a href="#kontakt" class="btn btn-primary">Poptávka</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-grid"></div>
+
+  <div class="wrap hero-inner">
+    <div class="hero-content reveal">
+      <div class="kicker"><span class="dot"></span>Online · Beru zakázky · Chabařovice + 30 km</div>
+      <h1>
+        <span class="neon">Elektřina</span>
+        <span class="strike">bez kompromisů.</span>
+        <span class="accent">Klid v pojistkách.</span>
+      </h1>
+      <p class="hero-sub">
+        Jsem <strong>Pavel Douša</strong> — elektrikář z Chabařovic. Dělám rozvaděče, kompletní instalace, rekonstrukce bytů a domů, LED a chytré prvky. Bez bordelu. Bez výmluv. <strong>S přehledem.</strong>
+      </p>
+      <div class="hero-ctas">
+        <a href="#kontakt" class="btn btn-primary">
+          Pošlete poptávku
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#sluzby" class="btn btn-ghost">
+          Co umím
+        </a>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="hero-meta-num" data-count="15" data-suffix="+">0</div>
+          <div class="hero-meta-lbl">let v oboru</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-num b" data-count="540" data-suffix="+">0</div>
+          <div class="hero-meta-lbl">zakázek hotovo</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-num r" data-count="24" data-suffix="h">0</div>
+          <div class="hero-meta-lbl">odezva na poptávku</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal delay-2">
+      <svg class="hero-svg" viewBox="0 0 400 400">
+        <defs>
+          <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="35%" stop-color="#FFD600"/>
+            <stop offset="100%" stop-color="#FFB400"/>
+          </linearGradient>
+          <radialGradient id="coreGrad">
+            <stop offset="0%" stop-color="#fff" stop-opacity=".9"/>
+            <stop offset="60%" stop-color="#FFD600" stop-opacity=".3"/>
+            <stop offset="100%" stop-color="#FFD600" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="200" cy="200" r="180" class="ring-orbit"/>
+        <circle cx="200" cy="200" r="140" class="ring-orbit r2"/>
+        <circle cx="200" cy="200" r="100" fill="url(#coreGrad)"/>
+        <path class="bolt-main" d="M225 60 L130 215 L185 215 L165 340 L275 175 L215 175 L240 60 Z"/>
+        <circle class="spark" cx="80" cy="120" r="3"/>
+        <circle class="spark" cx="320" cy="100" r="2.5" style="animation-delay:.6s"/>
+        <circle class="spark" cx="340" cy="280" r="3" style="animation-delay:1.2s"/>
+        <circle class="spark" cx="60" cy="300" r="2" style="animation-delay:1.8s"/>
+        <circle class="spark" cx="370" cy="200" r="2.5" style="animation-delay:2.4s"/>
+        <circle class="spark" cx="30" cy="200" r="2" style="animation-delay:3s"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="scroll-cue">scroll</div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span>ROZVADĚČE <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>ELEKTROINSTALACE <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>REKONSTRUKCE <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>LED &amp; CHYTRÉ DOMY <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>PŘÍPRAVA NA REVIZI <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>PROVOZOVNY · DÍLNY <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>ROZVADĚČE <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>ELEKTROINSTALACE <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>REKONSTRUKCE <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>LED &amp; CHYTRÉ DOMY <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>PŘÍPRAVA NA REVIZI <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+    <span>PROVOZOVNY · DÍLNY <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.2c-.4.5-.1 1.3.6 1.3H10l-1.3 8.5c-.1.7.8 1.1 1.3.6L19.5 12c.4-.5.1-1.3-.6-1.3H14l1.3-8.5c.1-.7-.8-1.1-1.3-.5L13 2z"/></svg></span>
+  </div>
+</div>
+
+<section id="rozvadece">
+  <div class="wrap">
+    <div class="rozvadec-grid">
+      <div class="rozvadec-text reveal">
+        <div class="kicker"><span class="dot"></span>Specializace</div>
+        <h3>Rozvaděče, které <b>vidíte rád</b> i s otevřenými dvířky.</h3>
+        <p>Rozvaděč je srdce každé instalace. Když je dělaný správně, lidi v něm vidí pořádek, řemeslo a klid. Když je dělaný špatně, prozradí se to při první kontrole — nebo při první závadě.</p>
+        <p>Stavím rozvaděče na klíč: bytové, rodinné, pro provozovny i dílny. Vždy s přehledným popisem, dokumentací a logikou, kterou pochopí i ten, kdo přijde po mně.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Přepěťové ochrany &amp; chrániče tam, kde mají být</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Čisté kabelové vedení a popisy okruhů</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Předaný stav připravený na revizního technika</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Rezerva pro budoucí rozšíření — nemusíte to dělat dvakrát</li>
+        </ul>
+      </div>
+
+      <div class="rozvadec-visual reveal delay-2">
+        <span class="tag t1">// MAIN BUS · 400V</span>
+        <span class="tag t2">// FI 30mA</span>
+        <span class="tag t3">// READY</span>
+        <svg class="rozvadec-svg" viewBox="0 0 280 360">
+          <rect x="20" y="20" width="240" height="320" rx="10" fill="#0d1018" stroke="rgba(0,212,255,.4)" stroke-width="1.5"/>
+          <rect x="32" y="32" width="216" height="36" rx="4" fill="#11151f" stroke="rgba(255,255,255,.08)"/>
+          <text x="44" y="55" font-family="JetBrains Mono" font-size="11" fill="#FFD600" font-weight="700">P. DOUŠA · ROZVADĚČ</text>
+          <circle cx="232" cy="50" r="3" fill="#00ff9d"><animate attributeName="opacity" values="1;.3;1" dur="1.4s" repeatCount="indefinite"/></circle>
+
+          <g>
+            <rect x="32" y="80" width="216" height="50" rx="4" fill="#11151f" stroke="rgba(255,255,255,.08)"/>
+            <rect x="42" y="90" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#FFD600" stroke-width="1"/>
+            <rect x="44" y="95" width="16" height="6" rx="1" fill="#FFD600"/>
+            <rect x="68" y="90" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#FFD600" stroke-width="1"/>
+            <rect x="70" y="95" width="16" height="6" rx="1" fill="#FFD600"/>
+            <rect x="94" y="90" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#00D4FF" stroke-width="1"/>
+            <rect x="96" y="95" width="16" height="6" rx="1" fill="#00D4FF"/>
+            <rect x="120" y="90" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="146" y="90" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="172" y="90" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="198" y="90" width="40" height="30" rx="2" fill="#1a1f2c" stroke="#FF3B30"/>
+            <text x="218" y="110" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#FF3B30" font-weight="700">RCD</text>
+          </g>
+
+          <g>
+            <rect x="32" y="142" width="216" height="50" rx="4" fill="#11151f" stroke="rgba(255,255,255,.08)"/>
+            <rect x="42" y="152" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#00D4FF"/>
+            <rect x="68" y="152" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#00D4FF"/>
+            <rect x="94" y="152" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#00D4FF"/>
+            <rect x="120" y="152" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="146" y="152" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="172" y="152" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="198" y="152" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="224" y="152" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#FFD600"/>
+          </g>
+
+          <g>
+            <rect x="32" y="204" width="216" height="50" rx="4" fill="#11151f" stroke="rgba(255,255,255,.08)"/>
+            <rect x="42" y="214" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#FFD600"/>
+            <rect x="68" y="214" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="94" y="214" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="120" y="214" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="146" y="214" width="20" height="30" rx="2" fill="#1a1f2c" stroke="rgba(255,255,255,.2)"/>
+            <rect x="172" y="214" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#00D4FF"/>
+            <rect x="198" y="214" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#00D4FF"/>
+            <rect x="224" y="214" width="20" height="30" rx="2" fill="#1a1f2c" stroke="#00D4FF"/>
+          </g>
+
+          <line x1="32" y1="280" x2="248" y2="280" stroke="rgba(255,214,0,.5)" stroke-width="2"/>
+          <line x1="32" y1="288" x2="248" y2="288" stroke="rgba(255,214,0,.3)" stroke-width="1"/>
+          <line x1="32" y1="296" x2="248" y2="296" stroke="rgba(0,212,255,.3)" stroke-width="1"/>
+
+          <g>
+            <line x1="60" y1="120" x2="60" y2="145" stroke="rgba(255,214,0,.6)" stroke-width="1"/>
+            <line x1="100" y1="120" x2="100" y2="145" stroke="rgba(0,212,255,.5)" stroke-width="1"/>
+            <line x1="180" y1="120" x2="180" y2="145" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+          </g>
+
+          <text x="44" y="320" font-family="JetBrains Mono" font-size="9" fill="rgba(255,255,255,.4)">// 16 modulů · CERT OK</text>
+          <circle cx="232" cy="318" r="3" fill="#FFD600"><animate attributeName="opacity" values="1;.4;1" dur="2s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sluzby">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker"><span class="dot"></span>Co dělám</div>
+      <h2>Služby <em>od kabelu po klid</em></h2>
+      <p>Od malé úpravy zásuvky po kompletní rekonstrukci. Vždy s důrazem na čistou práci, jasné předání a životnost, která nezklame.</p>
+    </div>
+
+    <div class="services-grid">
+      <article class="service reveal">
+        <div class="service-num">01</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+        </div>
+        <h3>Montáž &amp; výměna rozvaděčů</h3>
+        <p>Bytové i provozní rozvaděče na klíč. Přepěťové ochrany, chrániče, popisky. Vše připravené pro revizního technika.</p>
+      </article>
+
+      <article class="service s2 reveal delay-1">
+        <div class="service-num">02</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 6 18 3-9h4"/></svg>
+        </div>
+        <h3>Kompletní elektroinstalace</h3>
+        <p>Novostavby, rekonstrukce, drobné úpravy. Trasy promyšlené tak, aby to fungovalo i za 20 let — bez sekání do zdi naslepo.</p>
+      </article>
+
+      <article class="service s3 reveal delay-2">
+        <div class="service-num">03</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h2M9 13h2M9 17h2M13 9h2M13 13h2M13 17h2"/></svg>
+        </div>
+        <h3>Rekonstrukce bytů a domů</h3>
+        <p>Sjednotím to, co tam je, a připravím to, co bude. Domluva s ostatními řemesly, aby do vás nezačal kopat zedník v půli práce.</p>
+      </article>
+
+      <article class="service reveal delay-1">
+        <div class="service-num">04</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>
+        </div>
+        <h3>Světla, LED &amp; chytré prvky</h3>
+        <p>Scény, stmívače, LED pásky, chytré spínače a senzory. Aby se světlo chovalo, jak to potřebujete vy — ne tlačítko ze 70. let.</p>
+      </article>
+
+      <article class="service s2 reveal delay-2">
+        <div class="service-num">05</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v6H3zM3 13h18v8H3zM7 13v-4M17 13v-4"/></svg>
+        </div>
+        <h3>Provozovny &amp; dílny</h3>
+        <p>Třífázové zásuvky, robustní okruhy, samostatné jištění strojů. Postavené na to, že tam bude každý den někdo pracovat.</p>
+      </article>
+
+      <article class="service s3 reveal delay-3">
+        <div class="service-num">06</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4M12 2l8 4v6c0 5-3.5 9.4-8 10-4.5-.6-8-5-8-10V6l8-4z"/></svg>
+        </div>
+        <h3>Příprava na revizi</h3>
+        <p>Dokumentace, popisy, čistý stav. Když přijde revizní technik, neztrácíte čas dohledáváním. A neplatíte za druhou návštěvu.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="stats compact">
+  <div class="wrap">
+    <div class="stats-grid reveal">
+      <div class="stat">
+        <div class="stat-num"><span data-count="15">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-label">Let praxe</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span data-count="540">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-label">Hotových zakázek</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span data-count="100">0</span><span class="stat-suffix">%</span></div>
+        <div class="stat-label">Bez bordelu</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span data-count="24">0</span><span class="stat-suffix">h</span></div>
+        <div class="stat-label">Odezva</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="postup">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker"><span class="dot"></span>Jak to běží</div>
+      <h2>Postup zakázky <em>bez tajností</em></h2>
+      <p>Čtyři kroky. Žádné překvapení. Žádné nečekané faktury na konci. Jen práce, kterou si můžete zpětně rozkliknout.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-step reveal">
+        <div class="tl-node">01</div>
+        <h4>Poptávka</h4>
+        <p>Napište mi, co potřebujete. Stačí pár vět — kde, co a jestli to spěchá.</p>
+      </div>
+      <div class="tl-step reveal delay-1">
+        <div class="tl-node">02</div>
+        <h4>Prohlídka na místě</h4>
+        <p>Přijedu, podívám se, navrhnu rozumné řešení a řeknu, co má prioritu.</p>
+      </div>
+      <div class="tl-step reveal delay-2">
+        <div class="tl-node">03</div>
+        <h4>Montáž</h4>
+        <p>Čistá práce, přehledné vedení, logické zapojení. A pořádek, když odcházím.</p>
+      </div>
+      <div class="tl-step reveal delay-3">
+        <div class="tl-node">04</div>
+        <h4>Předání</h4>
+        <p>Víte, co se udělalo, kde co je a co bude potřeba dál. Bez hádanek.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="kontakt">
+  <div class="wrap cta-grid">
+    <div class="cta-text reveal">
+      <div class="kicker"><span class="dot"></span>Poptávka — zdarma a nezávazně</div>
+      <h2>Máte rozvaděč, rekonstrukci nebo <b>kabelový rébus?</b></h2>
+      <p>Napište, co se děje. Čím přesněji to popíšete, tím rychleji můžu odhadnout rozsah práce a domluvit termín. Žádné ankety, žádné call centrum — píšete přímo mně.</p>
+      <ul class="cta-bullets">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Odpovídám do 24 hodin</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Cenovou nabídku dostanete písemně</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Chabařovice, Ústí nad Labem, Teplice a okolí</li>
+      </ul>
+    </div>
+
+    <form class="contact-card reveal delay-2" id="contactForm">
+      <h3>Rychlá poptávka</h3>
+      <p>Vyplňte, co víte. Zbytek si doladíme po telefonu.</p>
+      <div class="form-grid">
+        <label>Jméno
+          <input type="text" name="name" placeholder="Vaše jméno" required>
+        </label>
+        <label>Lokalita
+          <input type="text" name="place" placeholder="Chabařovice / okolí" required>
+        </label>
+        <label>Typ práce
+          <select name="job">
+            <option>Montáž nebo výměna rozvaděče</option>
+            <option>Kompletní elektroinstalace</option>
+            <option>Rekonstrukce bytu / domu</option>
+            <option>Světla, LED, chytré prvky</option>
+            <option>Provozovna, dílna, garáž</option>
+            <option>Příprava na revizi</option>
+          </select>
+        </label>
+        <label>Termín
+          <input type="text" name="date" placeholder="Kdy to potřebujete">
+        </label>
+        <label class="wide">Co se děje
+          <textarea name="message" placeholder="Například: rekonstrukce bytu 3+1, nový rozvaděč, kuchyň, garáž, dílna..."></textarea>
+        </label>
+      </div>
+      <button class="btn-submit" type="submit">Odeslat poptávku</button>
+      <div class="form-note">Ukázkový formulář. Pro ostrý web se napojí odesílání na e-mail nebo CRM.</div>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span><span class="y">Pavel Douša</span> · elektrikář · Chabařovice</span>
+    <span>Rozvaděče · <span class="b">elektroinstalace</span> · rekonstrukce · LED</span>
+  </div>
+</footer>
+
+<style>#wd24-bar{position:fixed;bottom:0;left:0;right:0;z-index:99999;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(15,23,42,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.08);padding:10px 20px;font-family:-apple-system,'Inter',sans-serif;font-size:11px;font-weight:500;color:rgba(255,255,255,.5);box-shadow:0 -4px 16px rgba(0,0,0,.2)}#wd24-bar a{color:rgba(255,255,255,.85);text-decoration:none;font-weight:800;letter-spacing:-.02em;font-size:13px}#wd24-bar a span{color:#f97316}#wd24-bar a:hover{color:#fff}</style>
+<div id="wd24-bar">Web&nbsp;vytvořil&nbsp;<a href="https://webdo24.cz" target="_blank">webdo<span>24</span>.cz</a>&nbsp;·&nbsp;Profesionální web do 24&nbsp;hodin</div>
+
+<script>
+(function(){
+  const glow = document.getElementById('cursorGlow');
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', (e) => {
+    tx = e.clientX; ty = e.clientY;
+  });
+  function loop(){
+    cx += (tx - cx) * 0.12;
+    cy += (ty - cy) * 0.12;
+    glow.style.transform = 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%)';
+    requestAnimationFrame(loop);
+  }
+  loop();
+  document.addEventListener('mouseleave', () => glow.style.opacity = '0');
+  document.addEventListener('mouseenter', () => glow.style.opacity = '1');
+
+  document.querySelectorAll('.service').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+})();
+
+(function(){
+  const canvas = document.getElementById('particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize(){
+    const hero = canvas.parentElement;
+    W = canvas.width = hero.offsetWidth * window.devicePixelRatio;
+    H = canvas.height = hero.offsetHeight * window.devicePixelRatio;
+    canvas.style.width = hero.offsetWidth + 'px';
+    canvas.style.height = hero.offsetHeight + 'px';
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const COUNT = 70;
+  for (let i = 0; i < COUNT; i++){
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.4 * window.devicePixelRatio,
+      vy: (Math.random() - 0.5) * 0.4 * window.devicePixelRatio,
+      r: Math.random() * 1.6 * window.devicePixelRatio + 0.4,
+      c: Math.random() > 0.6 ? '#FFD600' : '#00D4FF',
+      a: Math.random() * 0.6 + 0.2
+    });
+  }
+
+  function tick(){
+    ctx.clearRect(0, 0, W, H);
+    for (let p of particles){
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+      ctx.globalAlpha = p.a;
+      ctx.fillStyle = p.c;
+      ctx.shadowColor = p.c;
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 0.08;
+    ctx.strokeStyle = '#00D4FF';
+    for (let i = 0; i < particles.length; i++){
+      for (let j = i + 1; j < particles.length; j++){
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        const max = 130 * window.devicePixelRatio;
+        if (d < max){
+          ctx.globalAlpha = (1 - d/max) * 0.18;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+(function(){
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+(function(){
+  function animateCount(el){
+    const target = parseInt(el.dataset.count || el.textContent, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1600;
+    const start = performance.now();
+    function step(now){
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const val = Math.floor(target * eased);
+      el.textContent = val + suffix;
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(step);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        const target = e.target;
+        if (target.dataset.count){
+          animateCount(target);
+        } else {
+          target.querySelectorAll('[data-count]').forEach(animateCount);
+        }
+        io.unobserve(target);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  document.querySelectorAll('[data-count]').forEach(el => io.observe(el));
+})();
+
+(function(){
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const note = form.querySelector('.form-note');
+    note.textContent = 'Díky! V ostré verzi se poptávka odešle na e-mail Pavla Douši.';
+    note.classList.add('ok');
+    form.querySelector('.btn-submit').textContent = 'Odesláno';
+    setTimeout(() => {
+      form.querySelector('.btn-submit').textContent = 'Odeslat poptávku';
+    }, 4000);
+  });
+})();
+</script>
+
+</body>
+</html>
