@@ -1235,7 +1235,7 @@ section.compact{padding:80px 0}
     console.log('[Form] Data prepared:', data);
     try {
       console.log('[Form] Trying JSON fetch…');
-      const res = await fetch('https://n8n.webdo24.cz/webhook/webdo24-new-lead', {
+      const res = await fetch('https://n8n.webdo24.cz/webhook/new-lead', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -1249,7 +1249,7 @@ section.compact{padding:80px 0}
       console.log('[Form] JSON fetch failed:', err.message);
       try {
         console.log('[Form] Trying fallback form-data fetch…');
-        await fetch('https://n8n.webdo24.cz/webhook/webdo24-new-lead', {
+        await fetch('https://n8n.webdo24.cz/webhook/new-lead', {
           method: 'POST',
           mode: 'no-cors',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
