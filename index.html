@@ -1232,28 +1232,35 @@ section.compact{padding:80px 0}
       date: form.date.value,
       message: form.message.value
     };
+    console.log('[Form] Data prepared:', data);
     try {
+      console.log('[Form] Trying JSON fetch…');
       const res = await fetch('https://n8n.webdo24.cz/webhook/webdo24-new-lead', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
       });
+      console.log('[Form] JSON fetch response status:', res.status);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       note.textContent = 'Děkujeme. Vaše zpráva byla odeslána.';
       note.classList.add('ok');
       form.reset();
     } catch (err) {
+      console.log('[Form] JSON fetch failed:', err.message);
       try {
+        console.log('[Form] Trying fallback form-data fetch…');
         await fetch('https://n8n.webdo24.cz/webhook/webdo24-new-lead', {
           method: 'POST',
           mode: 'no-cors',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           body: new URLSearchParams(data)
         });
+        console.log('[Form] Fallback fetch sent (no-cors)');
         note.textContent = 'Děkujeme. Vaše zpráva byla odeslána.';
         note.classList.add('ok');
         form.reset();
-      } catch {
+      } catch (err2) {
+        console.log('[Form] Fallback fetch failed:', err2.message);
         note.textContent = 'Nepodařilo se odeslat. Zkuste to prosím znovu.';
         note.classList.remove('ok');
       }
