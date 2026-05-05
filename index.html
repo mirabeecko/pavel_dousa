@@ -1243,8 +1243,20 @@ section.compact{padding:80px 0}
       note.classList.add('ok');
       form.reset();
     } catch (err) {
-      note.textContent = 'Chyba při odesílání: ' + err.message;
-      note.classList.remove('ok');
+      try {
+        await fetch('https://n8n.webdo24.cz/webhook-test/webdo24-new-lead', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          body: new URLSearchParams(data)
+        });
+        note.textContent = 'Děkujeme. Vaše zpráva byla odeslána.';
+        note.classList.add('ok');
+        form.reset();
+      } catch {
+        note.textContent = 'Nepodařilo se odeslat. Zkuste to prosím znovu.';
+        note.classList.remove('ok');
+      }
     }
     btn.textContent = 'Odeslat poptávku';
     btn.disabled = false;
