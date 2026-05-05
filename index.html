@@ -1233,7 +1233,7 @@ section.compact{padding:80px 0}
       message: form.message.value
     };
     try {
-      const res = await fetch('https://n8n.webdo24.cz/webhook-test/webdo24-new-lead', {
+      const res = await fetch('https://n8n.webdo24.cz/webhook/webdo24-new-lead', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -1244,7 +1244,7 @@ section.compact{padding:80px 0}
       form.reset();
     } catch (err) {
       try {
-        await fetch('https://n8n.webdo24.cz/webhook-test/webdo24-new-lead', {
+        await fetch('https://n8n.webdo24.cz/webhook/webdo24-new-lead', {
           method: 'POST',
           mode: 'no-cors',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
