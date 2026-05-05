@@ -1225,6 +1225,7 @@ section.compact{padding:80px 0}
     btn.textContent = 'Odesílám…';
     btn.disabled = true;
     const data = {
+      web_id: 'dousa-elektro.cz',
       name: form.name.value,
       place: form.place.value,
       job: form.job.value,
@@ -1232,7 +1233,7 @@ section.compact{padding:80px 0}
       message: form.message.value
     };
     try {
-      await fetch('https://n8n.webdo24.cz/webhook/5fdddafe-8f87-45d8-b234-fc1e008ef73e', {
+      await fetch('https://n8n.webdo24.cz/webhook-test/webdo24-new-lead', {
         method: 'POST',
         mode: 'no-cors',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
