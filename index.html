@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pavel Douša | Elektrikář Chabařovice — Rozvaděče · Instalace · Revize</title>
 <meta name="description" content="Pavel Douša — profesionální elektrikář z Chabařovic. Rozvaděče, kompletní elektroinstalace, rekonstrukce, LED a chytré prvky. Klid v pojistkách. Kvalita bez kompromisů.">
+<!-- WebDo24 Connect — analytika + poptávky do zákaznického portálu (login.webdo24.cz). n8n webhook zůstává zachován. -->
+<script src="https://login.webdo24.cz/embed.js" data-project="47dd8591-8fa3-4ac2-ab45-57bf1c7e4eb3" data-api="https://login.webdo24.cz" async></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -1032,7 +1034,7 @@ section.compact{padding:80px 0}
       </ul>
     </div>
 
-    <form class="contact-card reveal delay-2" id="contactForm">
+    <form class="contact-card reveal delay-2" id="contactForm" data-wd24-wired="1">
       <h3>Rychlá poptávka</h3>
       <p>Vyplňte, co víte. Zbytek si doladíme po telefonu.</p>
       <div class="form-grid">
@@ -1233,6 +1235,27 @@ section.compact{padding:80px 0}
       message: form.message.value
     };
     console.log('[Form] Data prepared:', data);
+    // ── WebDo24 backend: poptávka do zákaznického portálu (vedle n8n webhooku) ──
+    const WD24_PROJECT = '47dd8591-8fa3-4ac2-ab45-57bf1c7e4eb3';
+    const WD24_API = 'https://login.webdo24.cz';
+    const backendSend = fetch(WD24_API + '/api/leads/create', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        project_id: WD24_PROJECT,
+        name: data.name,
+        phone: '',
+        email: '',
+        message: (data.place ? 'Lokalita: ' + data.place + '\n' : '') + (data.job ? 'Typ práce: ' + data.job + '\n' : '') + (data.date ? 'Termín: ' + data.date + '\n' : '') + (data.message || ''),
+        source: 'web'
+      })
+    }).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(() => fetch(WD24_API + '/api/analytics/event', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ project_id: WD24_PROJECT, event_type: 'form_submission' })
+      }).catch(() => {}))
+      .catch(err => console.warn('[Form] Backend lead failed (n8n pokračuje):', err.message));
     try {
       console.log('[Form] Trying JSON fetch…');
       const res = await fetch('https://n8n.webdo24.cz/webhook/new-lead', {
@@ -1242,6 +1265,7 @@ section.compact{padding:80px 0}
       });
       console.log('[Form] JSON fetch response status:', res.status);
       if (!res.ok) throw new Error('HTTP ' + res.status);
+      await backendSend;
       note.textContent = 'Děkujeme. Vaše zpráva byla odeslána.';
       note.classList.add('ok');
       form.reset();
@@ -1256,6 +1280,7 @@ section.compact{padding:80px 0}
           body: new URLSearchParams(data)
         });
         console.log('[Form] Fallback fetch sent (no-cors)');
+        await backendSend;
         note.textContent = 'Děkujeme. Vaše zpráva byla odeslána.';
         note.classList.add('ok');
         form.reset();
