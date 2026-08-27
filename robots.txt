@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dousa-elektro.cz/sitemap.xml
